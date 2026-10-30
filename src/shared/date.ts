@@ -1,6 +1,6 @@
 // Dates are "YYYY-MM-DD" in Asia/Dhaka, months are "YYYY-MM". Never derive "today" from UTC.
 const dhakaDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka' })
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 export function todayDhaka(now: Date = new Date()): string {
@@ -40,5 +40,15 @@ export function monthLabel(month: string): string {
 /** "2026-10-30" → "Fri, 30 Oct" */
 export function dayLabel(date: string): string {
   const [y, m, d] = date.split('-').map(Number)
-  return `${DAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]}, ${d} ${MONTHS[m - 1]}`
+  return `${weekday(y, m, d).slice(0, 3)}, ${d} ${MONTHS[m - 1]}`
+}
+
+/** "2026-10-31" → "Saturday, 31 Oct 2026" */
+export function longDateLabel(date: string): string {
+  const [y, m, d] = date.split('-').map(Number)
+  return `${weekday(y, m, d)}, ${d} ${MONTHS[m - 1]} ${y}`
+}
+
+function weekday(y: number, m: number, d: number) {
+  return DAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]
 }

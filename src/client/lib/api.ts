@@ -16,6 +16,8 @@ async function call<T>(handler: () => T): Promise<T> {
   return structuredClone(handler())
 }
 
+export const getMe = () => call(() => fake.getMe())
+
 export const listAccounts = () => call(() => fake.listAccounts())
 export const createAccount = (input: AccountInput) => call(() => fake.createAccount(input))
 export const updateAccount = (id: number, patch: AccountPatch) => call(() => fake.updateAccount(id, patch))

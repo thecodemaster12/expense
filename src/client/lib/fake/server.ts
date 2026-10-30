@@ -11,6 +11,7 @@ import {
   type CategoryPatch,
 } from '../../../shared/schemas/category.ts'
 import { fieldErrors, nextColor } from '../../../shared/schemas/common.ts'
+import type { Me } from '../../../shared/schemas/me.ts'
 import type { MonthTotals, Summary } from '../../../shared/schemas/summary.ts'
 import {
   transactionInput,
@@ -54,6 +55,13 @@ function assertUniqueName(rows: { id: number; name: string }[], name: string, se
   if (rows.some((r) => r.id !== selfId && r.name.toLowerCase() === name.toLowerCase())) {
     throw new ApiError(400, 'validation', { name: 'Already exists' })
   }
+}
+
+// --- me ---
+
+/** Placeholder until Cloudflare Access (Phase 3) supplies the real email. */
+export function getMe(): Me {
+  return { name: 'Shihab', email: 'shihab@shompod.local' }
 }
 
 // --- accounts ---

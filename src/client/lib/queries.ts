@@ -1,6 +1,7 @@
 import { queryOptions, type QueryClient } from '@tanstack/react-query'
 import * as api from './api.ts'
 
+export const meQuery = queryOptions({ queryKey: ['me'], queryFn: api.getMe, staleTime: Infinity })
 export const accountsQuery = queryOptions({ queryKey: ['accounts'], queryFn: api.listAccounts })
 export const categoriesQuery = queryOptions({ queryKey: ['categories'], queryFn: api.listCategories })
 export const summaryQuery = (month: string) =>

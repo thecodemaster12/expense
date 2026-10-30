@@ -10,6 +10,7 @@ All routes are JSON under `/api`. Every input is validated with the shared Zod s
 
 | Method | Path | Purpose |
 |---|---|---|
+| GET | `/api/me` | `{ name, email }` of the signed-in person. Phase 1: placeholder. Phase 3: email from the Cloudflare Access login. |
 | GET | `/api/accounts` | List accounts with computed `balance` |
 | POST | `/api/accounts` | Create account. Gets the next unused `color` unless one is given. |
 | PATCH | `/api/accounts/:id` | Rename, change opening balance, archive. Only the fields sent change. |

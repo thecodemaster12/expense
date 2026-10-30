@@ -1,5 +1,4 @@
-import { Plus } from 'lucide-react'
-import { Link, NavLink } from 'react-router'
+import { NavLink } from 'react-router'
 import { navItems } from './nav.ts'
 
 /** Desktop left rail (≥1024px). */
@@ -9,14 +8,7 @@ export function Sidebar() {
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col overflow-y-auto border-r border-border bg-surface p-4 lg:flex">
       <p className="px-2 text-title">Shompod</p>
 
-      <Link
-        to="/add"
-        className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-input bg-primary text-label font-semibold text-white hover:bg-primary-hover"
-      >
-        <Plus size={18} aria-hidden /> Log Transaction
-      </Link>
-
-      <nav aria-label="Main" className="mt-6">
+      <nav aria-label="Main" className="mt-8">
         <ul className="space-y-1">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <li key={to}>

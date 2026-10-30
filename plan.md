@@ -20,6 +20,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"
 - [x] Dashboard: month picker, 4 cards, category donut + list, account balances, 6-month bar chart
 - [x] Accounts screen: total, balances, opening balances, add/edit/archive/restore, colors
+- [x] Profile placeholder: top-right avatar menu with name, email, disabled Sign out
 - [x] Settings screen: category manager (add, rename, delete that moves entries into another existing category), import/export buttons (UI only), app version
 - [ ] Check every screen at 360px and desktop
 
@@ -39,6 +40,7 @@ Goal: real data, deployed to `shompod.<you>.workers.dev`.
 ## Phase 3: Daily use
 
 - [ ] Cloudflare Access login wall (dashboard steps in `docs/cloudflare.md`) + header check in Worker
+- [ ] Real profile: `GET /api/me` reads the Access email; Sign out goes to `/cdn-cgi/access/logout`
 - [ ] PWA: manifest, icons, install, offline shell
 - [ ] CSV import with preview (parser tests) and CSV export
 - [ ] Dark mode from the same tokens

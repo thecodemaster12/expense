@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, addMonths, dayLabel, isValidDate, monthLabel, monthOf, todayDhaka } from './date.ts'
+import { addDays, addMonths, dayLabel, isValidDate, longDateLabel, monthLabel, monthOf, todayDhaka } from './date.ts'
 
 describe('todayDhaka', () => {
   it('is already tomorrow in Dhaka at 23:30 UTC', () => {
@@ -46,4 +46,6 @@ describe('month helpers', () => {
     expect(dayLabel('2026-10-30')).toBe('Fri, 30 Oct')
     expect(dayLabel('2026-11-01')).toBe('Sun, 1 Nov')
   })
+
+  it('longDateLabel', () => expect(longDateLabel('2026-10-31')).toBe('Saturday, 31 Oct 2026'))
 })
