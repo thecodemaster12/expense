@@ -75,7 +75,7 @@ Dark mode (Phase 3) redefines the same tokens as CSS variables. Components never
 
 ## Layout
 
-- **Mobile (< 640px):** bottom tab bar (Dashboard, Transactions, Accounts, Settings) and a floating "+" button. Cards stack, and account balances become a horizontal snap row.
+- **Mobile and tablet (< 1024px):** bottom tab bar: Dashboard · Transactions · raised **+** · Accounts · Settings. (Trial choice; the fallback is a floating "+" in the bottom-right corner.) Add opens as its own page (`/add`) with the tab bar hidden. Cards stack, and account balances become a horizontal snap row.
 - **Tablet (640–1024px):** summary cards sit in pairs.
 - **Desktop (> 1024px):** 240px left sidebar, content max width about 1280px, and "+ Log Transaction" in the top bar.
 
