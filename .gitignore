@@ -18,6 +18,9 @@ dist/
 *.csv
 !**/fixtures/**/*.csv
 
+# local design references (keep on disk, never push)
+temp-layouts/
+
 # OS / editor
 .DS_Store
 .vscode/
