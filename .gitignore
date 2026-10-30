@@ -2,6 +2,9 @@
 node_modules/
 dist/
 .wrangler/
+dist-ssr/
+*.local
+worker-configuration.d.ts
 *.log
 
 # secrets — never commit (use `wrangler secret put` for prod)

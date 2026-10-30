@@ -29,6 +29,7 @@ Non-goals: SaaS/sign-up, bank or bKash API sync, native app.
 ## Working rules
 
 - **Plan first.** Show the plan for a step and wait for "go" before writing code.
+- **Never run a git command without permission.** Show the exact command and wait for a yes. Ask before every decision, too.
 - Keep replies short and simple.
 - One commit per checklist item in `plan.md`, with a clear message. Tick the box.
 - Before scaffolding or touching Cloudflare config, check the current Cloudflare docs. Don't use Pages Functions.
@@ -56,17 +57,18 @@ Non-goals: SaaS/sign-up, bank or bKash API sync, native app.
 - The D1 `database_id` in `wrangler.jsonc` is not a secret. Access protects the data.
 - Before every push, check `git diff --cached` for keys or tokens.
 
-## Commands (fill in once scaffolded)
+## Commands
 
 ```bash
-npm run dev
-npm run build
-npm test
-npm run db:generate
-npm run db:migrate:local
-npm run db:migrate:remote
-npm run deploy
+npm run dev          # app + API locally (http://localhost:5173, API at /api/*)
+npm run build        # type-check + production build
+npm test             # Vitest
+npm run lint
+npm run cf-typegen   # regenerate worker-configuration.d.ts (also runs on npm install)
+npm run deploy       # build + wrangler deploy (Phase 2)
 ```
+
+DB scripts (`db:generate`, `db:migrate:local`, `db:migrate:remote`) are added in Phase 2.
 
 ## Definition of done
 
