@@ -2,7 +2,8 @@
 
 ## Money and dates
 
-- Money is **integer taka**. No decimals, no floats. Display only through `formatTaka()` → `৳12,500`.
+- Money is **integer taka**. No decimals, no floats. Display only through `formatTaka()` → `৳1,15,000` (lakh grouping).
+- Columns are snake_case in the database. Code and the API use camelCase (`accountId`), and Drizzle maps between them.
 - Dates are `YYYY-MM-DD` text in **Asia/Dhaka** local date. Never build "today" from UTC.
 - Month = `substr(date, 1, 7)`.
 - No time of day. `created_at` keeps the order of entries within a day.

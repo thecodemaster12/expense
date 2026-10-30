@@ -6,7 +6,7 @@ Where they disagree:
 - The **prose** in `DESIGN.md` wins over its YAML frontmatter. For example, primary is `#0D3B2E`, not `#00241a`, which matches the Stitch screens.
 - Category **names** come from `CLAUDE.md`. Only the colors come from the design.
 - Stitch features outside v1 (reconcile, budgets, notifications, Nagad, batch entry, search) are deferred. See `plan.md` Phase 4.
-- Money shows whole taka (`৳5,000`), never `.00`.
+- Money shows whole taka with lakh grouping (`৳1,15,000`), never `.00`.
 
 ## Feel
 

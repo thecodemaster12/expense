@@ -18,7 +18,7 @@ All routes are JSON under `/api`. Every input is validated with the shared Zod s
 | PATCH | `/api/categories/:id` | Rename, reorder, archive |
 | GET | `/api/transactions` | Filtered list, newest first, paged |
 | POST | `/api/transactions` | Create |
-| PATCH | `/api/transactions/:id` | Update |
+| PATCH | `/api/transactions/:id` | Update (send the whole transaction, same schema as create) |
 | DELETE | `/api/transactions/:id` | Delete |
 | GET | `/api/summary?month=YYYY-MM` | `{ income, spent, saved, savingsRate, byCategory: [{ category, amount, share }] }` |
 | GET | `/api/summary/months?from=YYYY-MM&to=YYYY-MM` | Per-month `{ month, income, spent, saved }` |

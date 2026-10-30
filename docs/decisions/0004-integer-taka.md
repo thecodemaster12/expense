@@ -8,7 +8,7 @@ Floats cause rounding errors in money. The Google Sheet uses whole taka only.
 
 ## Decision
 
-Store and calculate money as integers in whole taka, with no paisa. Display only through `formatTaka()` → `৳12,500` (no `.00`, even though the Stitch screens show it).
+Store and calculate money as integers in whole taka, with no paisa. Display only through `formatTaka()`, which uses lakh grouping: `৳12,500`, `৳1,15,000`, `৳1,25,00,000`. No `.00`, even though the Stitch screens show it.
 
 ## Consequences
 

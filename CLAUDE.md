@@ -42,7 +42,8 @@ Non-goals: SaaS/sign-up, bank or bKash API sync, native app.
 - Screens get data **only** through `src/client/lib/api.ts`. Only that file calls `fetch`.
 - Zod schemas live in `src/shared`, and types are inferred from them. Validate every API input, and return `400` with field errors.
 - Worker: `*.route.ts` = HTTP + validation, `*.service.ts` = SQL. Aggregate in SQL (`SUM`, `GROUP BY`) and never sum rows in JS.
-- Money is integer taka. Display only via `formatTaka()` → `৳12,500`.
+- Money is integer taka. Display only via `formatTaka()` → `৳1,15,000` (lakh grouping).
+- camelCase in code and the API, snake_case only in DB columns.
 - Dates are `YYYY-MM-DD` Dhaka local strings. Never build "today" from UTC.
 - Transfers are never income or spending.
 - No query on `transactions` without a date range. Never poll.
