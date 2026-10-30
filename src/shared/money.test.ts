@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatTaka, parseSignedTaka, parseTaka } from './money.ts'
+import { compactTaka, formatTaka, parseSignedTaka, parseTaka } from './money.ts'
 
 describe('formatTaka', () => {
   it('uses lakh grouping', () => {
@@ -42,5 +42,16 @@ describe('parseSignedTaka', () => {
     expect(parseSignedTaka('--5')).toBeNull()
     expect(parseSignedTaka('5-')).toBeNull()
     expect(parseSignedTaka('')).toBeNull()
+  })
+})
+
+describe('compactTaka', () => {
+  it('shortens with K and lakh (L)', () => {
+    expect(compactTaka(0)).toBe('৳0')
+    expect(compactTaka(950)).toBe('৳950')
+    expect(compactTaka(50000)).toBe('৳50K')
+    expect(compactTaka(12500)).toBe('৳12.5K')
+    expect(compactTaka(250000)).toBe('৳2.5L')
+    expect(compactTaka(-30000)).toBe('−৳30K')
   })
 })

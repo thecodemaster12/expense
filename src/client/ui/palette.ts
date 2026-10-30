@@ -14,3 +14,6 @@ export const paletteClasses: Record<Color, { badge: string; dot: string }> = {
   green: { badge: 'text-cat-green bg-cat-green-bg', dot: 'bg-cat-green' },
   orange: { badge: 'text-cat-orange bg-cat-orange-bg', dot: 'bg-cat-orange' },
 }
+
+/** CSS color for SVG fills (charts): the solid palette token. */
+export const paletteVar = (color: Color) => `var(--color-cat-${color})`

@@ -5,7 +5,8 @@ import { navItems } from './nav.ts'
 /** Desktop left rail (≥1024px). */
 export function Sidebar() {
   return (
-    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r border-border bg-surface p-4 lg:flex">
+    // fixed (not sticky): always spans the full window height, however long the page is
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col overflow-y-auto border-r border-border bg-surface p-4 lg:flex">
       <p className="px-2 text-title">Shompod</p>
 
       <Link
