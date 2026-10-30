@@ -1,1 +1,121 @@
+@import "@fontsource-variable/hanken-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
 @import "tailwindcss";
+
+/* Design tokens — source: docs/design-system.md. Components use these classes, never raw hex.
+   Dark mode (Phase 3) only redefines these variables. */
+@theme {
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* brand + roles */
+  --color-primary: #0d3b2e;
+  --color-primary-hover: #08261e;
+  --color-secondary: #1e2a38;
+  --color-focus: #10b981;
+
+  --color-income: #10b981;
+  --color-income-soft: #d1fae5;
+  --color-expense: #e11d48;
+  --color-expense-soft: #ffe4e6;
+  --color-transfer: #4f46e5;
+  --color-transfer-soft: #eef2ff;
+
+  /* surfaces + text */
+  --color-canvas: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f3f5;
+  --color-border: #e2e8f0;
+  --color-border-input: #cbd5e1;
+  --color-ink: #141c24;
+  --color-muted: #64748b;
+
+  /* account accents */
+  --color-acc-cash: #0d3b2e;
+  --color-acc-bank: #1e2a38;
+  --color-acc-bkash: #d12053;
+  --color-acc-other: #475569;
+
+  /* category badges: text / background */
+  --color-cat-rent: #4338ca;
+  --color-cat-rent-bg: #eef2ff;
+  --color-cat-food: #b45309;
+  --color-cat-food-bg: #fef3c7;
+  --color-cat-bills: #334155;
+  --color-cat-bills-bg: #f1f5f9;
+  --color-cat-travel: #0369a1;
+  --color-cat-travel-bg: #e0f2fe;
+  --color-cat-shopping: #be123c;
+  --color-cat-shopping-bg: #ffe4e6;
+  --color-cat-health: #0f766e;
+  --color-cat-health-bg: #ccfbf1;
+  --color-cat-family: #7e22ce;
+  --color-cat-family-bg: #f3e8ff;
+  --color-cat-other: #475569;
+  --color-cat-other-bg: #f1f5f9;
+
+  /* type scale */
+  --text-display: 2.5rem;
+  --text-display--line-height: 3rem;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.03em;
+  --text-display-sm: 1.875rem;
+  --text-display-sm--line-height: 2.375rem;
+  --text-display-sm--font-weight: 700;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-headline: 1.75rem;
+  --text-headline--line-height: 2.25rem;
+  --text-headline--font-weight: 600;
+  --text-headline--letter-spacing: -0.02em;
+  --text-headline-sm: 1.375rem;
+  --text-headline-sm--line-height: 1.875rem;
+  --text-headline-sm--font-weight: 600;
+  --text-headline-sm--letter-spacing: -0.01em;
+  --text-title: 1rem;
+  --text-title--line-height: 1.5rem;
+  --text-title--font-weight: 600;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.25rem;
+  --text-body-sm: 0.75rem;
+  --text-body-sm--line-height: 1rem;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.125rem;
+  --text-label--font-weight: 500;
+  --text-money-lg: 1.5rem;
+  --text-money-lg--line-height: 2rem;
+  --text-money-lg--font-weight: 600;
+  --text-money-lg--letter-spacing: -0.02em;
+  --text-money: 0.875rem;
+  --text-money--line-height: 1.25rem;
+  --text-money--font-weight: 500;
+  --text-money--letter-spacing: -0.01em;
+  --text-mono-label: 0.6875rem;
+  --text-mono-label--line-height: 0.875rem;
+  --text-mono-label--font-weight: 500;
+  --text-mono-label--letter-spacing: 0.04em;
+
+  /* shape + depth */
+  --radius-input: 0.5rem;
+  --radius-card: 1rem;
+  --radius-sheet: 1.5rem;
+  --shadow-card: 0 1px 3px rgb(13 59 46 / 0.04), 0 1px 2px rgb(20 28 36 / 0.02);
+  --shadow-pop: 0 8px 24px -4px rgb(20 28 36 / 0.08), 0 4px 8px -2px rgb(20 28 36 / 0.03);
+  --shadow-sheet: 0 20px 40px -12px rgb(13 59 46 / 0.16);
+}
+
+/* Page side gutter: 16px mobile, 24px tablet, 40px desktop. */
+@utility px-gutter {
+  padding-inline: 1rem;
+  @variant sm {
+    padding-inline: 1.5rem;
+  }
+  @variant lg {
+    padding-inline: 2.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-body text-ink antialiased;
+  }
+}
