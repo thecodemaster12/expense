@@ -14,3 +14,13 @@ export const amount = z
   .positive({ error: 'Must be more than 0' })
 
 export const name = z.string().trim().min(1, { error: 'Enter a name' }).max(40)
+
+/** First message per field, e.g. { amount: "Must be more than 0" }. Shape of the API's 400 body. */
+export function fieldErrors(error: z.ZodError): Record<string, string> {
+  const fields: Record<string, string> = {}
+  for (const issue of error.issues) {
+    const key = issue.path.join('.') || 'form'
+    fields[key] ??= issue.message
+  }
+  return fields
+}

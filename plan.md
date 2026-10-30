@@ -14,7 +14,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Scaffold React + Vite + TypeScript (strict) + Tailwind, using the current Cloudflare React template (check docs first)
 - [x] Design tokens in Tailwind from `docs/design-system.md` (colors, fonts, radii)
 - [x] Shared Zod schemas in `src/shared` (account, category, transaction, summary) + `formatTaka()` + Dhaka date helpers, with tests
-- [ ] Dummy data fixtures + `api.ts` returning them (shaped by the Zod types)
+- [x] Dummy data fixtures + `api.ts` returning them (shaped by the Zod types)
 - [ ] App shell: bottom tab bar (mobile), sidebar (desktop), floating "+" button
 - [ ] Add screen: type toggle, amount, category chips, account chips, date, note, transfer mode, Undo toast
 - [ ] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"

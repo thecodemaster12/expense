@@ -36,6 +36,8 @@ export const transactionQuery = z.object({
 
 export type TransactionType = z.infer<typeof transactionType>
 export type TransactionInput = z.infer<typeof transactionInput>
+/** What a form sends (defaults like toAccountId: null may be left out). */
+export type NewTransaction = z.input<typeof transactionInput>
 export type Transaction = TransactionInput & { id: number; createdAt: string }
 export type TransactionQuery = z.infer<typeof transactionQuery>
 export type TransactionPage = { items: Transaction[]; nextCursor: string | null }
