@@ -10,7 +10,8 @@ export const categoryInput = z.object({
   archived: z.boolean().default(false),
 })
 
-export const category = categoryInput.extend({ id })
+/** `uses` = transactions in the last 90 days, for "most-used first" chips. */
+export const category = categoryInput.extend({ id, uses: z.number().int().nonnegative() })
 
 export type CategoryKind = z.infer<typeof categoryKind>
 export type CategoryInput = z.input<typeof categoryInput>

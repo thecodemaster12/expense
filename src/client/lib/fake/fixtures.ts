@@ -5,6 +5,7 @@ import type { Category } from '../../../shared/schemas/category.ts'
 import type { Transaction, TransactionInput } from '../../../shared/schemas/transaction.ts'
 
 export type StoredAccount = Omit<Account, 'balance'>
+export type StoredCategory = Omit<Category, 'uses'>
 
 export const BANK = 1
 export const CASH = 2
@@ -20,7 +21,7 @@ export const RENT = 1, FOOD = 2, BILLS = 3, TRAVEL = 4, SHOPPING = 5, HEALTH = 6
 export const SALARY = 9, OTHER_INCOME = 10
 
 const expenseNames = ['Rent', 'Food', 'Electricity & Bills', 'Travel', 'Shopping', 'Health', 'Family', 'Other']
-export const categories: Category[] = [
+export const categories: StoredCategory[] = [
   ...expenseNames.map((name, i) => ({ id: i + 1, name, kind: 'expense' as const, sortOrder: i, archived: false })),
   { id: SALARY, name: 'Salary', kind: 'income', sortOrder: 0, archived: false },
   { id: OTHER_INCOME, name: 'Other Income', kind: 'income', sortOrder: 1, archived: false },

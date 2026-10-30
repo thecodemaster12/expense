@@ -13,6 +13,12 @@ export function isValidDate(value: string): boolean {
   return date.getUTCFullYear() === y && date.getUTCMonth() === m - 1 && date.getUTCDate() === d
 }
 
+/** addDays("2026-03-01", -1) → "2026-02-28" */
+export function addDays(date: string, n: number): string {
+  const [y, m, d] = date.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10)
+}
+
 export function monthOf(date: string): string {
   return date.slice(0, 7)
 }

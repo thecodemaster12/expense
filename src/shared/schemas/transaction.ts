@@ -3,23 +3,25 @@ import { amount, id, isoDate, month } from './common.ts'
 
 export const transactionType = z.enum(['expense', 'income', 'transfer'])
 
+const pick = (what: string) => z.number({ error: `Pick ${what}` }).int().positive()
+
 const base = {
   date: isoDate,
   amount,
-  accountId: id,
+  accountId: pick('an account'),
   note: z.string().trim().max(200).optional(),
 }
 
 // Expense/income need a category and no "to" account.
 // Whether the category's kind matches the type is checked in the API (needs the DB).
-const categorized = { ...base, categoryId: id, toAccountId: z.null().default(null) }
+const categorized = { ...base, categoryId: pick('a category'), toAccountId: z.null().default(null) }
 
 /** Used for both create and edit: edits always send the whole transaction. */
 export const transactionInput = z
   .discriminatedUnion('type', [
     z.object({ type: z.literal('expense'), ...categorized }),
     z.object({ type: z.literal('income'), ...categorized }),
-    z.object({ type: z.literal('transfer'), ...base, toAccountId: id, categoryId: z.null().default(null) }),
+    z.object({ type: z.literal('transfer'), ...base, toAccountId: pick('an account'), categoryId: z.null().default(null) }),
   ])
   .refine((t) => t.type !== 'transfer' || t.toAccountId !== t.accountId, {
     path: ['toAccountId'],

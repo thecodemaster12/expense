@@ -4,11 +4,12 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import './index.css'
 import { AccountsPage } from './features/accounts/AccountsPage.tsx'
-import { AddPage } from './features/add/AddPage.tsx'
 import { DashboardPage } from './features/dashboard/DashboardPage.tsx'
 import { SettingsPage } from './features/settings/SettingsPage.tsx'
+import { AddPage } from './features/transactions/AddPage.tsx'
 import { TransactionsPage } from './features/transactions/TransactionsPage.tsx'
 import { AppShell } from './layout/AppShell.tsx'
+import { ToastProvider } from './ui/ToastProvider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,9 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ToastProvider>
+        <RouterProvider router={router} />
+      </ToastProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

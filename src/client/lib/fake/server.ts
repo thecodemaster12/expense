@@ -1,7 +1,7 @@
 // Phase 1 only: an in-memory stand-in for the Worker API. Same inputs, outputs and errors as docs/api.md.
 // The real math lives in SQL in Phase 2; summing in JS here is fine because this file is deleted then.
 import type { z } from 'zod'
-import { addMonths, monthOf } from '../../../shared/date.ts'
+import { addDays, addMonths, monthOf, todayDhaka } from '../../../shared/date.ts'
 import { accountInput, type Account, type AccountInput } from '../../../shared/schemas/account.ts'
 import { categoryInput, type Category, type CategoryInput } from '../../../shared/schemas/category.ts'
 import { fieldErrors } from '../../../shared/schemas/common.ts'
@@ -81,7 +81,11 @@ export function updateAccount(id: number, patch: Partial<AccountInput>): Account
 // --- categories ---
 
 export function listCategories(): Category[] {
-  return db.categories
+  const since = addDays(todayDhaka(), -90)
+  return db.categories.map((c) => ({
+    ...c,
+    uses: db.transactions.filter((t) => t.categoryId === c.id && t.date >= since).length,
+  }))
 }
 
 export function createCategory(input: CategoryInput): Category {
@@ -89,7 +93,7 @@ export function createCategory(input: CategoryInput): Category {
   assertUniqueName(db.categories, data.name)
   const row = { ...data, id: nextId(db.categories) }
   db.categories.push(row)
-  return row
+  return { ...row, uses: 0 }
 }
 
 export function updateCategory(id: number, patch: Partial<CategoryInput>): Category {
@@ -97,7 +101,7 @@ export function updateCategory(id: number, patch: Partial<CategoryInput>): Categ
   const data = parse(categoryInput.partial(), patch)
   if (data.name) assertUniqueName(db.categories, data.name, id)
   Object.assign(row, data)
-  return row
+  return listCategories().find((c) => c.id === id)!
 }
 
 // --- transactions ---

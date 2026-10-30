@@ -13,7 +13,7 @@ All routes are JSON under `/api`. Every input is validated with the shared Zod s
 | GET | `/api/accounts` | List accounts with computed `balance` |
 | POST | `/api/accounts` | Create account |
 | PATCH | `/api/accounts/:id` | Rename, change opening balance, archive |
-| GET | `/api/categories` | List categories |
+| GET | `/api/categories` | List categories, each with `uses` (transactions in the last 90 days) for most-used-first chips |
 | POST | `/api/categories` | Create category |
 | PATCH | `/api/categories/:id` | Rename, reorder, archive |
 | GET | `/api/transactions` | Filtered list, newest first, paged |
