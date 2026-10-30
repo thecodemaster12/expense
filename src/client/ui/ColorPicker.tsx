@@ -1,12 +1,12 @@
 import { Check } from 'lucide-react'
-import { categoryColors, type CategoryColor } from '../../shared/schemas/category.ts'
-import { categoryColorClasses } from './category-colors.ts'
+import { colors, type Color } from '../../shared/schemas/common.ts'
+import { paletteClasses } from './palette.ts'
 
 /** Row of palette dots; arrow keys aren't wired, each dot is its own tab stop. */
-export function ColorPicker({ value, onChange }: { value: CategoryColor; onChange: (color: CategoryColor) => void }) {
+export function ColorPicker({ value, onChange }: { value: Color; onChange: (color: Color) => void }) {
   return (
     <div role="radiogroup" aria-label="Color" className="flex flex-wrap gap-2">
-      {categoryColors.map((color) => (
+      {colors.map((color) => (
         <button
           key={color}
           type="button"
@@ -14,7 +14,7 @@ export function ColorPicker({ value, onChange }: { value: CategoryColor; onChang
           aria-checked={color === value}
           aria-label={color}
           onClick={() => onChange(color)}
-          className={`grid size-8 place-items-center rounded-full text-white ${categoryColorClasses[color].dot} ${
+          className={`grid size-8 place-items-center rounded-full text-white ${paletteClasses[color].dot} ${
             color === value ? 'ring-2 ring-primary ring-offset-2' : ''
           }`}
         >

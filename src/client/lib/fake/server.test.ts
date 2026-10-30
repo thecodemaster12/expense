@@ -176,3 +176,57 @@ describe('category colors and patches', () => {
     expect(fake.listAccounts().find((a) => a.id === BANK)).toMatchObject({ name: 'City Bank', openingBalance: 40000 })
   })
 })
+
+describe('accounts', () => {
+  const balance = (id: number) => fake.listAccounts().find((a) => a.id === id)!.balance
+
+  it('balance = opening + income + transfers in - expenses - transfers out', () => {
+    fake.createAccount({ name: 'Wallet', openingBalance: 1000 })
+    const id = fake.listAccounts().find((a) => a.name === 'Wallet')!.id
+    fake.createTransaction({ type: 'income', date: '2026-10-01', amount: 500, accountId: id, categoryId: SALARY })
+    fake.createTransaction({ type: 'transfer', date: '2026-10-02', amount: 300, accountId: BANK, toAccountId: id })
+    fake.createTransaction({ type: 'expense', date: '2026-10-03', amount: 200, accountId: id, categoryId: FOOD })
+    fake.createTransaction({ type: 'transfer', date: '2026-10-04', amount: 100, accountId: id, toAccountId: CASH })
+    expect(balance(id)).toBe(1000 + 500 + 300 - 200 - 100)
+  })
+
+  it('changing the opening balance shifts the balance by the same amount', () => {
+    const before = balance(CASH)
+    fake.updateAccount(CASH, { openingBalance: 3000 - 1000 })
+    expect(balance(CASH)).toBe(before - 1000)
+  })
+
+  it('archived accounts keep their balance and stay in the list', () => {
+    const before = balance(BKASH)
+    fake.updateAccount(BKASH, { archived: true })
+    expect(fake.listAccounts().find((a) => a.id === BKASH)).toMatchObject({ archived: true, balance: before })
+  })
+
+  it('keeps at least one active account', () => {
+    fake.updateAccount(BKASH, { archived: true })
+    fake.updateAccount(CASH, { archived: true })
+    expect(apiError(() => fake.updateAccount(BANK, { archived: true })).fields.form).toBe('Keep at least one active account')
+  })
+
+  it('a new account gets an unused color unless one is given', () => {
+    expect(fake.createAccount({ name: 'Nagad' }).color).toBe('indigo')
+    expect(fake.createAccount({ name: 'Savings', color: 'teal' }).color).toBe('teal')
+  })
+})
+
+describe('account icons', () => {
+  const find = (id: number) => fake.listAccounts().find((a) => a.id === id)!
+
+  it('a rename keeps the icon; icons can change; others are rejected', () => {
+    fake.updateAccount(BKASH, { name: 'bKash Personal' })
+    expect(find(BKASH).icon).toBe('mobile')
+    fake.updateAccount(BKASH, { icon: 'card' })
+    expect(find(BKASH).icon).toBe('card')
+    // @ts-expect-error not in the icon set
+    expect(apiError(() => fake.updateAccount(BKASH, { icon: 'rocket' })).fields.icon).toBe('Pick an icon')
+  })
+
+  it('new accounts default to the wallet icon', () => {
+    expect(fake.createAccount({ name: 'Nagad' }).icon).toBe('wallet')
+  })
+})

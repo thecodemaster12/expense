@@ -14,7 +14,9 @@
 // accounts
 id               integer pk
 name             text unique not null        // "Bank", "Cash", "bKash"
-opening_balance  integer not null default 0
+opening_balance  integer not null default 0     // can be negative (money owed)
+color            text not null               // palette name, e.g. "slate"
+icon             text not null default 'wallet' // bank | wallet | mobile | card | savings | cash | coins | work | home | safe
 sort_order       integer not null default 0
 archived         integer not null default 0  // boolean
 
@@ -84,6 +86,7 @@ byCategory  = spent grouped by category, share = amount / spent
 ## Seed data
 
 - Accounts: Bank, Cash, bKash (opening balance 0).
+- An account is never deleted, only archived: it disappears from the Add pickers, but its history and balance stay (and count toward the total). At least one account stays active.
 - Expense categories: Rent, Food, Electricity & Bills, Travel, Shopping, Health, Family, Other.
 - Income categories: Salary, Other Income.
 - Seed colors are listed in `docs/design-system.md`.

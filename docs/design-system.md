@@ -29,9 +29,9 @@ Calm, ordered, trustworthy. Lots of whitespace, hairline borders, soft tinted su
 | border-input | `#CBD5E1` | Inputs |
 | text-muted | `#64748B` | Table headers, labels |
 
-Account accents (3px left bar on account cards): Cash `#0D3B2E`, Bank `#1E2A38`, bKash `#D12053`. New accounts get the neutral `#475569`.
+Account icon tile: each account card shows a rounded tile with the account's **stored** icon in its **stored** color (tint background, icon in the color itself, like category badges). Icons: bank, wallet, mobile, card, savings, cash, coins, work, home, safe (lucide icons, mapped in `ui/account-icons.ts`). Seeds: Bank bank/slate, Cash wallet/green, bKash mobile/rose. New accounts get the next unused color and the wallet icon.
 
-Category palette. Each category **stores** one of these names (`categories.color`), so renaming never changes its color. The user picks one in Settings, and new categories default to the next unused one (green first for income). Tokens are `--color-cat-<name>` and `--color-cat-<name>-bg`.
+Palette (categories and accounts). Each category or account **stores** one of these names (`categories.color`), so renaming never changes its color. The user picks one in Settings, and new categories default to the next unused one (green first for income). Tokens are `--color-cat-<name>` and `--color-cat-<name>-bg`.
 
 | Color | Text on background | Seed default |
 |---|---|---|

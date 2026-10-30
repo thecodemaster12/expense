@@ -14,3 +14,10 @@ export function parseTaka(input: string): number | null {
   const amount = Number(clean)
   return Number.isSafeInteger(amount) ? amount : null
 }
+
+/** Like parseTaka but allows a leading minus (an opening balance can be money owed). */
+export function parseSignedTaka(input: string): number | null {
+  const negative = /^\s*[-−]/.test(input)
+  const amount = parseTaka(input.replace(/^\s*[-−]/, ''))
+  return amount && negative ? -amount : amount // amount && … keeps "-0" as 0
+}

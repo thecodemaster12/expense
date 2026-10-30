@@ -30,12 +30,6 @@
   --color-ink: #141c24;
   --color-muted: #64748b;
 
-  /* account accents */
-  --color-acc-cash: #0d3b2e;
-  --color-acc-bank: #1e2a38;
-  --color-acc-bkash: #d12053;
-  --color-acc-other: #475569;
-
   /* category palette: text / background (categories store one of these names) */
   --color-cat-indigo: #4338ca;
   --color-cat-indigo-bg: #eef2ff;

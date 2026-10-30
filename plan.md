@@ -19,7 +19,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Add screen: type toggle, amount, category chips, account chips, date, note, transfer mode, Undo toast
 - [x] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"
 - [ ] Dashboard: month picker, 4 cards, category donut + list, account balances, 6-month bar chart
-- [ ] Accounts screen: balances, opening balances, add/archive
+- [x] Accounts screen: total, balances, opening balances, add/edit/archive/restore, colors
 - [x] Settings screen: category manager (add, rename, delete that moves entries into another existing category), import/export buttons (UI only), app version
 - [ ] Check every screen at 360px and desktop
 

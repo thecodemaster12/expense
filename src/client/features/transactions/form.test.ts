@@ -9,7 +9,7 @@ const cat = (id: number, kind: 'expense' | 'income', uses: number, sortOrder = i
 })
 const categories = [cat(1, 'expense', 2), cat(2, 'expense', 9), cat(3, 'expense', 2, 0), cat(4, 'expense', 50, 4, true), cat(9, 'income', 1)]
 
-const acc = (id: number, archived = false): Account => ({ id, name: `a${id}`, openingBalance: 0, sortOrder: id, archived, balance: 0 })
+const acc = (id: number, archived = false): Account => ({ id, name: `a${id}`, color: 'gray', icon: 'wallet', openingBalance: 0, sortOrder: id, archived, balance: 0 })
 const accounts = [acc(1, true), acc(2), acc(3)]
 
 const base: FormState = { type: 'expense', amount: '450', categoryId: 2, accountId: 2, toAccountId: null, date: '2026-10-30', note: '' }

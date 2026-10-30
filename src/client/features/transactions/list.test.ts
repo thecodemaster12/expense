@@ -27,7 +27,7 @@ group('groupByDay', () => {
 })
 
 group('describe', () => {
-  const accounts = [{ id: 1, name: 'Bank' }, { id: 2, name: 'bKash' }].map((a) => ({ ...a, openingBalance: 0, sortOrder: 0, archived: false, balance: 0 }))
+  const accounts = [{ id: 1, name: 'Bank' }, { id: 2, name: 'bKash' }].map((a) => ({ ...a, color: 'gray' as const, icon: 'wallet' as const, openingBalance: 0, sortOrder: 0, archived: false, balance: 0 }))
   const categories = [{ id: 5, name: 'Food', kind: 'expense' as const, color: 'amber' as const, sortOrder: 0, archived: false, uses: 0 }]
 
   it('names the category or the transfer route', () => {

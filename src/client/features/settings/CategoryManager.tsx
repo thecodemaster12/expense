@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, Pencil, Trash2, X } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { nextColor, type Category, type CategoryColor, type CategoryKind } from '../../../shared/schemas/category.ts'
+import type { Category, CategoryKind } from '../../../shared/schemas/category.ts'
+import { nextColor, type Color } from '../../../shared/schemas/common.ts'
 import * as api from '../../lib/api.ts'
 import { categoriesQuery, invalidateMoney } from '../../lib/queries.ts'
 import { Button } from '../../ui/Button.tsx'
@@ -27,9 +28,9 @@ export function CategoryManager() {
   const toast = useToast()
   const categories = useQuery(categoriesQuery)
   const [kind, setKind] = useState<CategoryKind>('expense')
-  const [editing, setEditing] = useState<{ id: number; name: string; color: CategoryColor; error?: string } | null>(null)
+  const [editing, setEditing] = useState<{ id: number; name: string; color: Color; error?: string } | null>(null)
   const [newName, setNewName] = useState('')
-  const [pickedColor, setPickedColor] = useState<CategoryColor | null>(null)
+  const [pickedColor, setPickedColor] = useState<Color | null>(null)
   const [addError, setAddError] = useState('')
   const [deleting, setDeleting] = useState<Category | null>(null)
 
@@ -37,7 +38,7 @@ export function CategoryManager() {
     .filter((c) => c.kind === kind && !c.archived)
     .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name))
   // until the user picks one, a new category gets the next color this kind isn't using
-  const newColor = pickedColor ?? nextColor(list.map((c) => c.color), kind)
+  const newColor = pickedColor ?? nextColor(list.map((c) => c.color), kind === 'income' ? 'green' : undefined)
 
   const create = useMutation({
     mutationFn: () => api.createCategory({ name: newName, kind, color: newColor }),
@@ -51,7 +52,7 @@ export function CategoryManager() {
   })
 
   const rename = useMutation({
-    mutationFn: ({ id, name, color }: { id: number; name: string; color: CategoryColor }) => api.updateCategory(id, { name, color }),
+    mutationFn: ({ id, name, color }: { id: number; name: string; color: Color }) => api.updateCategory(id, { name, color }),
     onSuccess: () => {
       void invalidateMoney(queryClient)
       setEditing(null)

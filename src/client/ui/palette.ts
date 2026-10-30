@@ -1,7 +1,8 @@
-import type { CategoryColor } from '../../shared/schemas/category.ts'
+import type { Color } from '../../shared/schemas/common.ts'
 
 // Full class strings so Tailwind can find them; tokens live in index.css (--color-cat-*).
-export const categoryColorClasses: Record<CategoryColor, { badge: string; dot: string }> = {
+/** badge = text on tint (category pills); dot = solid (pickers, account bars, chart slices via `fill`). */
+export const paletteClasses: Record<Color, { badge: string; dot: string }> = {
   indigo: { badge: 'text-cat-indigo bg-cat-indigo-bg', dot: 'bg-cat-indigo' },
   amber: { badge: 'text-cat-amber bg-cat-amber-bg', dot: 'bg-cat-amber' },
   slate: { badge: 'text-cat-slate bg-cat-slate-bg', dot: 'bg-cat-slate' },

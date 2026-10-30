@@ -1,7 +1,8 @@
 // Phase 1 only: made-up data (docs/decisions/0003). Deleted in Phase 2 with the rest of lib/fake/.
 import { addMonths } from '../../../shared/date.ts'
 import type { Account } from '../../../shared/schemas/account.ts'
-import type { Category, CategoryColor } from '../../../shared/schemas/category.ts'
+import type { Category } from '../../../shared/schemas/category.ts'
+import type { Color } from '../../../shared/schemas/common.ts'
 import type { Transaction, TransactionInput } from '../../../shared/schemas/transaction.ts'
 
 export type StoredAccount = Omit<Account, 'balance'>
@@ -12,15 +13,15 @@ export const CASH = 2
 export const BKASH = 3
 
 export const accounts: StoredAccount[] = [
-  { id: BANK, name: 'Bank', openingBalance: 40000, sortOrder: 0, archived: false },
-  { id: CASH, name: 'Cash', openingBalance: 3000, sortOrder: 1, archived: false },
-  { id: BKASH, name: 'bKash', openingBalance: 2000, sortOrder: 2, archived: false },
+  { id: BANK, name: 'Bank', color: 'slate', icon: 'bank', openingBalance: 40000, sortOrder: 0, archived: false },
+  { id: CASH, name: 'Cash', color: 'green', icon: 'wallet', openingBalance: 3000, sortOrder: 1, archived: false },
+  { id: BKASH, name: 'bKash', color: 'rose', icon: 'mobile', openingBalance: 2000, sortOrder: 2, archived: false },
 ]
 
 export const RENT = 1, FOOD = 2, BILLS = 3, TRAVEL = 4, SHOPPING = 5, HEALTH = 6, FAMILY = 7, OTHER = 8
 export const SALARY = 9, OTHER_INCOME = 10
 
-const expenseSeeds: [string, CategoryColor][] = [
+const expenseSeeds: [string, Color][] = [
   ['Rent', 'indigo'], ['Food', 'amber'], ['Electricity & Bills', 'slate'], ['Travel', 'sky'],
   ['Shopping', 'rose'], ['Health', 'teal'], ['Family', 'purple'], ['Other', 'gray'],
 ]

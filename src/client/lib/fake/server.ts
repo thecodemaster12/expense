@@ -6,12 +6,11 @@ import { accountInput, accountPatch, type Account, type AccountInput, type Accou
 import {
   categoryInput,
   categoryPatch,
-  nextColor,
   type Category,
   type CategoryInput,
   type CategoryPatch,
 } from '../../../shared/schemas/category.ts'
-import { fieldErrors } from '../../../shared/schemas/common.ts'
+import { fieldErrors, nextColor } from '../../../shared/schemas/common.ts'
 import type { MonthTotals, Summary } from '../../../shared/schemas/summary.ts'
 import {
   transactionInput,
@@ -73,7 +72,8 @@ export function listAccounts(): Account[] {
 export function createAccount(input: AccountInput): Account {
   const data = parse(accountInput, input)
   assertUniqueName(db.accounts, data.name)
-  db.accounts.push({ ...data, id: nextId(db.accounts) })
+  const color = data.color ?? nextColor(db.accounts.map((a) => a.color))
+  db.accounts.push({ ...data, color, id: nextId(db.accounts) })
   return listAccounts().at(-1)!
 }
 
@@ -81,6 +81,9 @@ export function updateAccount(id: number, patch: AccountPatch): Account {
   const row = db.accounts.find((a) => a.id === id) ?? notFound('Account')
   const data = parse(accountPatch, patch)
   if (data.name) assertUniqueName(db.accounts, data.name, id)
+  if (data.archived && !db.accounts.some((a) => a.id !== id && !a.archived)) {
+    throw new ApiError(400, 'validation', { form: 'Keep at least one active account' })
+  }
   Object.assign(row, data)
   return listAccounts().find((a) => a.id === id)!
 }
@@ -100,7 +103,10 @@ export function createCategory(input: CategoryInput): Category {
   assertUniqueName(db.categories, data.name)
   // new categories go to the end of their list unless an order is given
   const sortOrder = input.sortOrder ?? Math.max(-1, ...db.categories.filter((c) => c.kind === data.kind).map((c) => c.sortOrder)) + 1
-  const color = data.color ?? nextColor(db.categories.filter((c) => c.kind === data.kind).map((c) => c.color), data.kind)
+  const color = data.color ?? nextColor(
+    db.categories.filter((c) => c.kind === data.kind).map((c) => c.color),
+    data.kind === 'income' ? 'green' : undefined,
+  )
   const row = { ...data, color, sortOrder, id: nextId(db.categories) }
   db.categories.push(row)
   return { ...row, uses: 0 }

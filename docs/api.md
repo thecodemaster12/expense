@@ -11,7 +11,7 @@ All routes are JSON under `/api`. Every input is validated with the shared Zod s
 | Method | Path | Purpose |
 |---|---|---|
 | GET | `/api/accounts` | List accounts with computed `balance` |
-| POST | `/api/accounts` | Create account |
+| POST | `/api/accounts` | Create account. Gets the next unused `color` unless one is given. |
 | PATCH | `/api/accounts/:id` | Rename, change opening balance, archive. Only the fields sent change. |
 | GET | `/api/categories` | List categories, each with `uses` (transactions in the last 90 days) for most-used-first chips |
 | POST | `/api/categories` | Create category. Goes to the end of its list unless `sortOrder` is given, and gets the next unused `color` unless one is given. |

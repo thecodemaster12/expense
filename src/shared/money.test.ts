@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatTaka, parseTaka } from './money.ts'
+import { formatTaka, parseSignedTaka, parseTaka } from './money.ts'
 
 describe('formatTaka', () => {
   it('uses lakh grouping', () => {
@@ -27,5 +27,20 @@ describe('parseTaka', () => {
     expect(parseTaka('-5')).toBeNull()
     expect(parseTaka('abc')).toBeNull()
     expect(parseTaka('99999999999999999999')).toBeNull()
+  })
+})
+
+describe('parseSignedTaka', () => {
+  it('accepts a leading minus (ASCII or typographic)', () => {
+    expect(parseSignedTaka('-5,000')).toBe(-5000)
+    expect(parseSignedTaka('−৳1,15,000')).toBe(-115000)
+    expect(parseSignedTaka('2000')).toBe(2000)
+    expect(parseSignedTaka('-0')).toBe(0)
+  })
+
+  it('rejects anything else', () => {
+    expect(parseSignedTaka('--5')).toBeNull()
+    expect(parseSignedTaka('5-')).toBeNull()
+    expect(parseSignedTaka('')).toBeNull()
   })
 })
