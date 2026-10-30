@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { transactionInput } from '../../../shared/schemas/transaction.ts'
 import { ApiError } from '../api-error.ts'
-import { BANK, BKASH, CASH, FOOD, generateTransactions, SALARY } from './fixtures.ts'
+import { BANK, BKASH, CASH, FOOD, generateTransactions, OTHER, OTHER_INCOME, RENT, SALARY } from './fixtures.ts'
 import * as fake from './server.ts'
 
 const total = () => fake.listAccounts().reduce((n, a) => n + a.balance, 0)
@@ -109,5 +109,70 @@ describe('validation', () => {
 
   it('404s on a missing transaction', () => {
     expect(apiError(() => fake.deleteTransaction(99999)).status).toBe(404)
+  })
+})
+
+describe('deleting a category', () => {
+  const usage = (id: number) => fake.getCategoryUsage(id).count
+
+  it('moves its entries to the target, then deletes it; spending is unchanged', () => {
+    const foodCount = usage(FOOD)
+    const otherCount = usage(OTHER)
+    const spent = fake.getSummary('2026-10').spent
+    fake.deleteCategory(FOOD, OTHER)
+    expect(fake.listCategories().some((c) => c.id === FOOD)).toBe(false)
+    expect(usage(OTHER)).toBe(otherCount + foodCount)
+    expect(fake.getSummary('2026-10').spent).toBe(spent)
+  })
+
+  it('requires a target when entries use it', () => {
+    expect(apiError(() => fake.deleteCategory(FOOD)).fields.moveTo).toMatch(/Pick where to move \d+ entries/)
+  })
+
+  it('rejects a target of the other kind or itself', () => {
+    expect(apiError(() => fake.deleteCategory(FOOD, SALARY)).fields.moveTo).toBe('Pick another expense category')
+    expect(apiError(() => fake.deleteCategory(FOOD, FOOD)).fields.moveTo).toBe('Pick another expense category')
+  })
+
+  it('deletes an unused category without a target', () => {
+    const fresh = fake.createCategory({ name: 'Gifts', kind: 'expense' })
+    fake.deleteCategory(fresh.id)
+    expect(fake.listCategories().some((c) => c.id === fresh.id)).toBe(false)
+  })
+
+  it('keeps at least one category of each kind', () => {
+    fake.deleteCategory(SALARY, OTHER_INCOME)
+    expect(apiError(() => fake.deleteCategory(OTHER_INCOME)).fields.form).toBe('Keep at least one income category')
+  })
+
+  it('404s on a missing category', () => {
+    expect(apiError(() => fake.deleteCategory(999, RENT)).status).toBe(404)
+  })
+})
+
+describe('category colors and patches', () => {
+  const find = (id: number) => fake.listCategories().find((c) => c.id === id)!
+
+  it('a rename keeps the color and the order', () => {
+    const before = find(FOOD)
+    fake.updateCategory(FOOD, { name: 'Groceries' })
+    expect(find(FOOD)).toMatchObject({ name: 'Groceries', color: before.color, sortOrder: before.sortOrder })
+  })
+
+  it('recolors on request and rejects colors outside the palette', () => {
+    fake.updateCategory(FOOD, { color: 'orange' })
+    expect(find(FOOD).color).toBe('orange')
+    // @ts-expect-error not a palette color
+    expect(apiError(() => fake.updateCategory(FOOD, { color: 'pink' })).fields.color).toBe('Pick a color')
+  })
+
+  it('a new category gets an unused color unless one is given', () => {
+    expect(fake.createCategory({ name: 'Internet', kind: 'expense' }).color).toBe('green')
+    expect(fake.createCategory({ name: 'Gifts', kind: 'expense', color: 'rose' }).color).toBe('rose')
+  })
+
+  it('renaming an account keeps its opening balance', () => {
+    fake.updateAccount(BANK, { name: 'City Bank' })
+    expect(fake.listAccounts().find((a) => a.id === BANK)).toMatchObject({ name: 'City Bank', openingBalance: 40000 })
   })
 })

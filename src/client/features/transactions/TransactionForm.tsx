@@ -7,6 +7,7 @@ import { transactionInput, type TransactionInput, type TransactionType } from '.
 import { Button } from '../../ui/Button.tsx'
 import { Chip } from '../../ui/Chip.tsx'
 import { Field } from '../../ui/Field.tsx'
+import { Input } from '../../ui/Input.tsx'
 import { SegmentedControl } from '../../ui/SegmentedControl.tsx'
 import { AmountInput } from './AmountInput.tsx'
 import { categoriesFor, changeType, toInput, type FormState } from './form.ts'
@@ -16,9 +17,6 @@ const types: { value: TransactionType; label: string }[] = [
   { value: 'income', label: 'Income' },
   { value: 'transfer', label: 'Transfer' },
 ]
-
-const inputClass =
-  'h-11 rounded-input border border-border-input bg-surface px-3 text-body focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10'
 
 type Props = {
   accounts: Account[]
@@ -110,18 +108,18 @@ export function TransactionForm({ accounts, categories, initial, saving, serverE
           <Chip selected={form.date === yesterday} onClick={() => set({ date: yesterday })}>
             Yesterday
           </Chip>
-          <input type="date" aria-label="Pick a date" value={form.date} onChange={(e) => set({ date: e.target.value })} className={inputClass} />
+          <Input type="date" aria-label="Pick a date" value={form.date} onChange={(e) => set({ date: e.target.value })} />
         </div>
       </Field>
 
       <Field label="Note (optional)" error={errors.note}>
-        <input
+        <Input
           aria-label="Note"
           value={form.note}
           maxLength={200}
           placeholder="e.g. Groceries"
           onChange={(e) => set({ note: e.target.value })}
-          className={`${inputClass} w-full`}
+          className="w-full"
         />
       </Field>
 

@@ -5,7 +5,7 @@ import { transactionInput } from '../../../shared/schemas/transaction.ts'
 import { categoriesFor, changeType, newForm, toInput, type FormState } from './form.ts'
 
 const cat = (id: number, kind: 'expense' | 'income', uses: number, sortOrder = id, archived = false): Category => ({
-  id, name: `c${id}`, kind, uses, sortOrder, archived,
+  id, name: `c${id}`, kind, color: 'gray', uses, sortOrder, archived,
 })
 const categories = [cat(1, 'expense', 2), cat(2, 'expense', 9), cat(3, 'expense', 2, 0), cat(4, 'expense', 50, 4, true), cat(9, 'income', 1)]
 

@@ -28,7 +28,7 @@ group('groupByDay', () => {
 
 group('describe', () => {
   const accounts = [{ id: 1, name: 'Bank' }, { id: 2, name: 'bKash' }].map((a) => ({ ...a, openingBalance: 0, sortOrder: 0, archived: false, balance: 0 }))
-  const categories = [{ id: 5, name: 'Food', kind: 'expense' as const, sortOrder: 0, archived: false, uses: 0 }]
+  const categories = [{ id: 5, name: 'Food', kind: 'expense' as const, color: 'amber' as const, sortOrder: 0, archived: false, uses: 0 }]
 
   it('names the category or the transfer route', () => {
     expect(describe(tx('2026-10-30', 'expense', 115000), accounts, categories)).toBe('৳1,15,000 · Food')

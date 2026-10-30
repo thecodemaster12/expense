@@ -1,7 +1,7 @@
 // Phase 1 only: made-up data (docs/decisions/0003). Deleted in Phase 2 with the rest of lib/fake/.
 import { addMonths } from '../../../shared/date.ts'
 import type { Account } from '../../../shared/schemas/account.ts'
-import type { Category } from '../../../shared/schemas/category.ts'
+import type { Category, CategoryColor } from '../../../shared/schemas/category.ts'
 import type { Transaction, TransactionInput } from '../../../shared/schemas/transaction.ts'
 
 export type StoredAccount = Omit<Account, 'balance'>
@@ -20,11 +20,14 @@ export const accounts: StoredAccount[] = [
 export const RENT = 1, FOOD = 2, BILLS = 3, TRAVEL = 4, SHOPPING = 5, HEALTH = 6, FAMILY = 7, OTHER = 8
 export const SALARY = 9, OTHER_INCOME = 10
 
-const expenseNames = ['Rent', 'Food', 'Electricity & Bills', 'Travel', 'Shopping', 'Health', 'Family', 'Other']
+const expenseSeeds: [string, CategoryColor][] = [
+  ['Rent', 'indigo'], ['Food', 'amber'], ['Electricity & Bills', 'slate'], ['Travel', 'sky'],
+  ['Shopping', 'rose'], ['Health', 'teal'], ['Family', 'purple'], ['Other', 'gray'],
+]
 export const categories: StoredCategory[] = [
-  ...expenseNames.map((name, i) => ({ id: i + 1, name, kind: 'expense' as const, sortOrder: i, archived: false })),
-  { id: SALARY, name: 'Salary', kind: 'income', sortOrder: 0, archived: false },
-  { id: OTHER_INCOME, name: 'Other Income', kind: 'income', sortOrder: 1, archived: false },
+  ...expenseSeeds.map(([name, color], i) => ({ id: i + 1, name, color, kind: 'expense' as const, sortOrder: i, archived: false })),
+  { id: SALARY, name: 'Salary', color: 'green', kind: 'income', sortOrder: 0, archived: false },
+  { id: OTHER_INCOME, name: 'Other Income', color: 'teal', kind: 'income', sortOrder: 1, archived: false },
 ]
 
 /** Seeded PRNG so the fixtures are the same on every load. */

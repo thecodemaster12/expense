@@ -31,19 +31,20 @@ Calm, ordered, trustworthy. Lots of whitespace, hairline borders, soft tinted su
 
 Account accents (3px left bar on account cards): Cash `#0D3B2E`, Bank `#1E2A38`, bKash `#D12053`. New accounts get the neutral `#475569`.
 
-Category badges (text on background):
+Category palette. Each category **stores** one of these names (`categories.color`), so renaming never changes its color. The user picks one in Settings, and new categories default to the next unused one (green first for income). Tokens are `--color-cat-<name>` and `--color-cat-<name>-bg`.
 
-| Category | Colors |
-|---|---|
-| Rent | `#4338CA` on `#EEF2FF` |
-| Food | `#B45309` on `#FEF3C7` |
-| Electricity & Bills | `#334155` on `#F1F5F9` |
-| Travel | `#0369A1` on `#E0F2FE` |
-| Shopping | `#BE123C` on `#FFE4E6` |
-| Health | `#0F766E` on `#CCFBF1` |
-| Family | `#7E22CE` on `#F3E8FF` |
-| Other / new | `#475569` on `#F1F5F9` |
-| Income categories | income colors |
+| Color | Text on background | Seed default |
+|---|---|---|
+| indigo | `#4338CA` on `#EEF2FF` | Rent |
+| amber | `#B45309` on `#FEF3C7` | Food |
+| slate | `#334155` on `#E2E8F0` | Electricity & Bills |
+| sky | `#0369A1` on `#E0F2FE` | Travel |
+| rose | `#BE123C` on `#FFE4E6` | Shopping |
+| teal | `#0F766E` on `#CCFBF1` | Health, Other Income |
+| purple | `#7E22CE` on `#F3E8FF` | Family |
+| gray | `#57534E` on `#F5F5F4` | Other |
+| green | `#15803D` on `#DCFCE7` | Salary |
+| orange | `#C2410C` on `#FFEDD5` | — |
 
 Dark mode (Phase 3) redefines the same tokens as CSS variables. Components never use raw hex values.
 

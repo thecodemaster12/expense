@@ -22,6 +22,7 @@ archived         integer not null default 0  // boolean
 id          integer pk
 name        text unique not null             // "Food"
 kind        text not null                    // "expense" | "income"
+color       text not null                    // palette name, e.g. "amber" (docs/design-system.md)
 sort_order  integer not null default 0
 archived    integer not null default 0
 
@@ -36,7 +37,7 @@ category_id    integer references categories(id) // null for transfer
 note           text
 created_at     text not null default current_timestamp
 
-index on (date), index on (account_id), index on (to_account_id)
+index on (date), index on (account_id), index on (to_account_id), index on (category_id)
 ```
 
 Later (Phase 4): `created_by text` on transactions, from the Access email.
@@ -50,6 +51,13 @@ Enforced in the shared Zod schema and again in the API.
 - `income`: `category_id` is an income category; `to_account_id` is null.
 - `transfer`: `to_account_id` is required and differs from `account_id`; `category_id` is null.
 - **Transfers are never income or spending.** They only move money between accounts.
+
+## Deleting a category
+
+Entries never lose their category. Before a used category is deleted, its entries move (merge) into another existing category of the same kind. The move and the delete run in one D1 batch. The last category of a kind can't be deleted.
+
+- Want a new name instead? That's Rename, not delete.
+- There's no "delete its entries too" option: it would silently change past months' totals and account balances.
 
 ## Balance
 
@@ -78,6 +86,7 @@ byCategory  = spent grouped by category, share = amount / spent
 - Accounts: Bank, Cash, bKash (opening balance 0).
 - Expense categories: Rent, Food, Electricity & Bills, Travel, Shopping, Health, Family, Other.
 - Income categories: Salary, Other Income.
+- Seed colors are listed in `docs/design-system.md`.
 
 ## Must-test logic
 

@@ -20,7 +20,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"
 - [ ] Dashboard: month picker, 4 cards, category donut + list, account balances, 6-month bar chart
 - [ ] Accounts screen: balances, opening balances, add/archive
-- [ ] Settings screen: categories list, import/export buttons (UI only), app version
+- [x] Settings screen: category manager (add, rename, delete that moves entries into another existing category), import/export buttons (UI only), app version
 - [ ] Check every screen at 360px and desktop
 
 ## Phase 2: Backend
@@ -41,7 +41,6 @@ Goal: real data, deployed to `shompod.<you>.workers.dev`.
 - [ ] Cloudflare Access login wall (dashboard steps in `docs/cloudflare.md`) + header check in Worker
 - [ ] PWA: manifest, icons, install, offline shell
 - [ ] CSV import with preview (parser tests) and CSV export
-- [ ] Category management in Settings
 - [ ] Dark mode from the same tokens
 
 ## Phase 4: Later

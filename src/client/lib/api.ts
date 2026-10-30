@@ -1,8 +1,8 @@
 // The ONLY data door for screens (docs/architecture.md).
 // Phase 1: answers come from lib/fake/server.ts after a short delay.
 // Phase 2: swap these bodies for fetch('/api/...') calls; signatures stay the same.
-import type { AccountInput } from '../../shared/schemas/account.ts'
-import type { CategoryInput } from '../../shared/schemas/category.ts'
+import type { AccountInput, AccountPatch } from '../../shared/schemas/account.ts'
+import type { CategoryInput, CategoryPatch } from '../../shared/schemas/category.ts'
 import type { NewTransaction, TransactionQuery } from '../../shared/schemas/transaction.ts'
 import * as fake from './fake/server.ts'
 
@@ -18,11 +18,13 @@ async function call<T>(handler: () => T): Promise<T> {
 
 export const listAccounts = () => call(() => fake.listAccounts())
 export const createAccount = (input: AccountInput) => call(() => fake.createAccount(input))
-export const updateAccount = (id: number, patch: Partial<AccountInput>) => call(() => fake.updateAccount(id, patch))
+export const updateAccount = (id: number, patch: AccountPatch) => call(() => fake.updateAccount(id, patch))
 
 export const listCategories = () => call(() => fake.listCategories())
 export const createCategory = (input: CategoryInput) => call(() => fake.createCategory(input))
-export const updateCategory = (id: number, patch: Partial<CategoryInput>) => call(() => fake.updateCategory(id, patch))
+export const updateCategory = (id: number, patch: CategoryPatch) => call(() => fake.updateCategory(id, patch))
+export const getCategoryUsage = (id: number) => call(() => fake.getCategoryUsage(id))
+export const deleteCategory = (id: number, moveTo?: number) => call(() => fake.deleteCategory(id, moveTo))
 
 export const listTransactions = (query: TransactionQuery) => call(() => fake.listTransactions(query))
 export const getTransaction = (id: number) => call(() => fake.getTransaction(id))

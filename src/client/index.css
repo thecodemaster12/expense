@@ -36,23 +36,27 @@
   --color-acc-bkash: #d12053;
   --color-acc-other: #475569;
 
-  /* category badges: text / background */
-  --color-cat-rent: #4338ca;
-  --color-cat-rent-bg: #eef2ff;
-  --color-cat-food: #b45309;
-  --color-cat-food-bg: #fef3c7;
-  --color-cat-bills: #334155;
-  --color-cat-bills-bg: #f1f5f9;
-  --color-cat-travel: #0369a1;
-  --color-cat-travel-bg: #e0f2fe;
-  --color-cat-shopping: #be123c;
-  --color-cat-shopping-bg: #ffe4e6;
-  --color-cat-health: #0f766e;
-  --color-cat-health-bg: #ccfbf1;
-  --color-cat-family: #7e22ce;
-  --color-cat-family-bg: #f3e8ff;
-  --color-cat-other: #475569;
-  --color-cat-other-bg: #f1f5f9;
+  /* category palette: text / background (categories store one of these names) */
+  --color-cat-indigo: #4338ca;
+  --color-cat-indigo-bg: #eef2ff;
+  --color-cat-amber: #b45309;
+  --color-cat-amber-bg: #fef3c7;
+  --color-cat-slate: #334155;
+  --color-cat-slate-bg: #e2e8f0;
+  --color-cat-sky: #0369a1;
+  --color-cat-sky-bg: #e0f2fe;
+  --color-cat-rose: #be123c;
+  --color-cat-rose-bg: #ffe4e6;
+  --color-cat-teal: #0f766e;
+  --color-cat-teal-bg: #ccfbf1;
+  --color-cat-purple: #7e22ce;
+  --color-cat-purple-bg: #f3e8ff;
+  --color-cat-gray: #57534e;
+  --color-cat-gray-bg: #f5f5f4;
+  --color-cat-green: #15803d;
+  --color-cat-green-bg: #dcfce7;
+  --color-cat-orange: #c2410c;
+  --color-cat-orange-bg: #ffedd5;
 
   /* type scale */
   --text-display: 2.5rem;

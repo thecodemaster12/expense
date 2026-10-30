@@ -8,6 +8,7 @@ import { accountsQuery, categoriesQuery, invalidateMoney } from '../../lib/queri
 import { Button } from '../../ui/Button.tsx'
 import { ConfirmDialog } from '../../ui/ConfirmDialog.tsx'
 import { Money } from '../../ui/Money.tsx'
+import { Select } from '../../ui/Input.tsx'
 import { MonthSwitcher } from '../../ui/MonthSwitcher.tsx'
 import { SegmentedControl } from '../../ui/SegmentedControl.tsx'
 import { useToast } from '../../ui/toast-context.ts'
@@ -20,8 +21,6 @@ const typeOptions: { value: TransactionType | 'all'; label: string }[] = [
   { value: 'income', label: 'Income' },
   { value: 'transfer', label: 'Transfer' },
 ]
-
-const selectClass = 'h-10 w-full rounded-input border border-border-input bg-surface px-3 text-body'
 
 export function TransactionsPage() {
   const navigate = useNavigate()
@@ -73,9 +72,9 @@ export function TransactionsPage() {
       <div className="mt-4 space-y-2">
         <SegmentedControl label="Type" options={typeOptions} value={filters.type ?? 'all'} onChange={setType} />
         <div className="grid grid-cols-2 gap-2">
-          <select
+          <Select
             aria-label="Account"
-            className={selectClass}
+            className="h-10 w-full"
             value={filters.accountId ?? ''}
             onChange={(e) => update({ accountId: Number(e.target.value) || undefined })}
           >
@@ -85,11 +84,11 @@ export function TransactionsPage() {
                 {a.name}
               </option>
             ))}
-          </select>
+          </Select>
           {filters.type !== 'transfer' && (
-            <select
+            <Select
               aria-label="Category"
-              className={selectClass}
+              className="h-10 w-full"
               value={filters.categoryId ?? ''}
               onChange={(e) => update({ categoryId: Number(e.target.value) || undefined })}
             >
@@ -99,7 +98,7 @@ export function TransactionsPage() {
                   {c.name}
                 </option>
               ))}
-            </select>
+            </Select>
           )}
         </div>
       </div>

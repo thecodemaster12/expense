@@ -2,8 +2,15 @@
 // The real math lives in SQL in Phase 2; summing in JS here is fine because this file is deleted then.
 import type { z } from 'zod'
 import { addDays, addMonths, monthOf, todayDhaka } from '../../../shared/date.ts'
-import { accountInput, type Account, type AccountInput } from '../../../shared/schemas/account.ts'
-import { categoryInput, type Category, type CategoryInput } from '../../../shared/schemas/category.ts'
+import { accountInput, accountPatch, type Account, type AccountInput, type AccountPatch } from '../../../shared/schemas/account.ts'
+import {
+  categoryInput,
+  categoryPatch,
+  nextColor,
+  type Category,
+  type CategoryInput,
+  type CategoryPatch,
+} from '../../../shared/schemas/category.ts'
 import { fieldErrors } from '../../../shared/schemas/common.ts'
 import type { MonthTotals, Summary } from '../../../shared/schemas/summary.ts'
 import {
@@ -70,9 +77,9 @@ export function createAccount(input: AccountInput): Account {
   return listAccounts().at(-1)!
 }
 
-export function updateAccount(id: number, patch: Partial<AccountInput>): Account {
+export function updateAccount(id: number, patch: AccountPatch): Account {
   const row = db.accounts.find((a) => a.id === id) ?? notFound('Account')
-  const data = parse(accountInput.partial(), patch)
+  const data = parse(accountPatch, patch)
   if (data.name) assertUniqueName(db.accounts, data.name, id)
   Object.assign(row, data)
   return listAccounts().find((a) => a.id === id)!
@@ -91,17 +98,42 @@ export function listCategories(): Category[] {
 export function createCategory(input: CategoryInput): Category {
   const data = parse(categoryInput, input)
   assertUniqueName(db.categories, data.name)
-  const row = { ...data, id: nextId(db.categories) }
+  // new categories go to the end of their list unless an order is given
+  const sortOrder = input.sortOrder ?? Math.max(-1, ...db.categories.filter((c) => c.kind === data.kind).map((c) => c.sortOrder)) + 1
+  const color = data.color ?? nextColor(db.categories.filter((c) => c.kind === data.kind).map((c) => c.color), data.kind)
+  const row = { ...data, color, sortOrder, id: nextId(db.categories) }
   db.categories.push(row)
   return { ...row, uses: 0 }
 }
 
-export function updateCategory(id: number, patch: Partial<CategoryInput>): Category {
+export function updateCategory(id: number, patch: CategoryPatch): Category {
   const row = db.categories.find((c) => c.id === id) ?? notFound('Category')
-  const data = parse(categoryInput.partial(), patch)
+  const data = parse(categoryPatch, patch)
   if (data.name) assertUniqueName(db.categories, data.name, id)
   Object.assign(row, data)
   return listCategories().find((c) => c.id === id)!
+}
+
+/** All-time count, shown before deleting (the chips' `uses` only covers 90 days). */
+export function getCategoryUsage(id: number): { count: number } {
+  if (!db.categories.some((c) => c.id === id)) notFound('Category')
+  return { count: db.transactions.filter((t) => t.categoryId === id).length }
+}
+
+/** Deletes a category. If entries use it, `moveTo` (same kind) is required and they move there first. */
+export function deleteCategory(id: number, moveTo?: number): void {
+  const category = db.categories.find((c) => c.id === id) ?? notFound('Category')
+  const sameKind = db.categories.filter((c) => c.kind === category.kind && c.id !== id)
+  if (sameKind.length === 0) {
+    throw new ApiError(400, 'validation', { form: `Keep at least one ${category.kind} category` })
+  }
+  const used = db.transactions.filter((t) => t.categoryId === id)
+  if (used.length > 0) {
+    if (moveTo === undefined) throw new ApiError(400, 'validation', { moveTo: `Pick where to move ${used.length} entries` })
+    if (!sameKind.some((c) => c.id === moveTo)) throw new ApiError(400, 'validation', { moveTo: `Pick another ${category.kind} category` })
+    for (const t of used) t.categoryId = moveTo
+  }
+  db.categories = db.categories.filter((c) => c.id !== id)
 }
 
 // --- transactions ---
