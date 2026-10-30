@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes } from 'react'
 const variants = {
   primary: 'bg-primary text-white hover:bg-primary-hover',
   secondary: 'border border-border bg-surface-muted text-secondary hover:bg-border',
+  danger: 'bg-expense text-white hover:opacity-90',
 }
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: keyof typeof variants }

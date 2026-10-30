@@ -123,6 +123,10 @@ export function listTransactions(query: z.input<typeof transactionQuery>): Trans
   return { items, nextCursor: rows.length > PAGE_SIZE && last ? `${last.date}_${last.id}` : null }
 }
 
+export function getTransaction(id: number): Transaction {
+  return db.transactions.find((t) => t.id === id) ?? notFound('Transaction')
+}
+
 /** Checks the schema can't: referenced rows exist and the category kind matches the type. */
 function validTransaction(input: unknown) {
   const data = parse(transactionInput, input)

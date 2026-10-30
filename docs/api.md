@@ -17,6 +17,7 @@ All routes are JSON under `/api`. Every input is validated with the shared Zod s
 | POST | `/api/categories` | Create category |
 | PATCH | `/api/categories/:id` | Rename, reorder, archive |
 | GET | `/api/transactions` | Filtered list, newest first, paged |
+| GET | `/api/transactions/:id` | One transaction (for the edit screen) |
 | POST | `/api/transactions` | Create |
 | PATCH | `/api/transactions/:id` | Update (send the whole transaction, same schema as create) |
 | DELETE | `/api/transactions/:id` | Delete |

@@ -17,7 +17,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Dummy data fixtures + `api.ts` returning them (shaped by the Zod types)
 - [x] App shell: bottom tab bar (mobile), sidebar (desktop), floating "+" button
 - [x] Add screen: type toggle, amount, category chips, account chips, date, note, transfer mode, Undo toast
-- [ ] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"
+- [x] Transactions screen: grouped by day, filters, edit, delete with confirm, "Load more"
 - [ ] Dashboard: month picker, 4 cards, category donut + list, account balances, 6-month bar chart
 - [ ] Accounts screen: balances, opening balances, add/archive
 - [ ] Settings screen: categories list, import/export buttons (UI only), app version

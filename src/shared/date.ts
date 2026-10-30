@@ -1,6 +1,7 @@
 // Dates are "YYYY-MM-DD" in Asia/Dhaka, months are "YYYY-MM". Never derive "today" from UTC.
 const dhakaDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka' })
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 export function todayDhaka(now: Date = new Date()): string {
   return dhakaDate.format(now)
@@ -34,4 +35,10 @@ export function addMonths(month: string, n: number): string {
 export function monthLabel(month: string): string {
   const [y, m] = month.split('-').map(Number)
   return `${MONTHS[m - 1]} ${y}`
+}
+
+/** "2026-10-30" → "Fri, 30 Oct" */
+export function dayLabel(date: string): string {
+  const [y, m, d] = date.split('-').map(Number)
+  return `${DAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]}, ${d} ${MONTHS[m - 1]}`
 }

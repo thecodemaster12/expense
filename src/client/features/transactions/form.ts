@@ -3,7 +3,7 @@ import { todayDhaka } from '../../../shared/date.ts'
 import { parseTaka } from '../../../shared/money.ts'
 import type { Account } from '../../../shared/schemas/account.ts'
 import type { Category } from '../../../shared/schemas/category.ts'
-import type { TransactionType } from '../../../shared/schemas/transaction.ts'
+import type { Transaction, TransactionType } from '../../../shared/schemas/transaction.ts'
 
 export type FormState = {
   type: TransactionType
@@ -21,6 +21,11 @@ export function newForm(accounts: Account[], lastAccountId: number | null): Form
   return { type: 'expense', amount: '', categoryId: null, accountId, toAccountId: null, date: todayDhaka(), note: '' }
 }
 
+export function fromTransaction(t: Transaction): FormState {
+  const { type, amount, categoryId, accountId, toAccountId, date, note } = t
+  return { type, amount: String(amount), categoryId, accountId, toAccountId, date, note: note ?? '' }
+}
+
 /** Switching type drops whatever no longer fits: the category (wrong kind or transfer) and the to-account. */
 export function changeType(state: FormState, type: TransactionType, categories: Category[]): FormState {
   const keepCategory = type !== 'transfer' && categories.some((c) => c.id === state.categoryId && c.kind === type)
@@ -32,11 +37,11 @@ export function changeType(state: FormState, type: TransactionType, categories: 
   }
 }
 
-/** Chips for the current type: active only, most-used first, then the user's order. */
-export function categoriesFor(categories: Category[], type: TransactionType): Category[] {
+/** Chips for the current type: active (or already chosen) only, most-used first, then the user's order. */
+export function categoriesFor(categories: Category[], type: TransactionType, chosenId: number | null = null): Category[] {
   if (type === 'transfer') return []
   return categories
-    .filter((c) => c.kind === type && !c.archived)
+    .filter((c) => c.kind === type && (!c.archived || c.id === chosenId))
     .sort((a, b) => b.uses - a.uses || a.sortOrder - b.sortOrder)
 }
 

@@ -25,6 +25,7 @@ export const createCategory = (input: CategoryInput) => call(() => fake.createCa
 export const updateCategory = (id: number, patch: Partial<CategoryInput>) => call(() => fake.updateCategory(id, patch))
 
 export const listTransactions = (query: TransactionQuery) => call(() => fake.listTransactions(query))
+export const getTransaction = (id: number) => call(() => fake.getTransaction(id))
 export const createTransaction = (input: NewTransaction) => call(() => fake.createTransaction(input))
 export const updateTransaction = (id: number, input: NewTransaction) => call(() => fake.updateTransaction(id, input))
 export const deleteTransaction = (id: number) => call(() => fake.deleteTransaction(id))

@@ -21,9 +21,10 @@ function Tab({ to, label, icon: Icon, end }: NavItem) {
   )
 }
 
-/** Mobile bottom bar: Dashboard · Transactions · + · Accounts · Settings. Hidden on the Add screen. */
+/** Mobile bottom bar: Dashboard · Transactions · + · Accounts · Settings. Hidden on Add/Edit. */
 export function TabBar() {
-  if (useLocation().pathname === '/add') return null
+  const path = useLocation().pathname
+  if (path === '/add' || path.endsWith('/edit')) return null
   const [dashboard, transactions, accounts, settings] = navItems
 
   return (

@@ -7,6 +7,7 @@ import { AccountsPage } from './features/accounts/AccountsPage.tsx'
 import { DashboardPage } from './features/dashboard/DashboardPage.tsx'
 import { SettingsPage } from './features/settings/SettingsPage.tsx'
 import { AddPage } from './features/transactions/AddPage.tsx'
+import { EditPage } from './features/transactions/EditPage.tsx'
 import { TransactionsPage } from './features/transactions/TransactionsPage.tsx'
 import { AppShell } from './layout/AppShell.tsx'
 import { ToastProvider } from './ui/ToastProvider.tsx'
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: '/accounts', element: <AccountsPage /> },
       { path: '/settings', element: <SettingsPage /> },
       { path: '/add', element: <AddPage /> },
+      { path: '/transactions/:id/edit', element: <EditPage /> },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

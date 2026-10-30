@@ -42,7 +42,8 @@ export function TransactionForm({ accounts, categories, initial, saving, serverE
     setClientErrors((e) => Object.fromEntries(Object.entries(e).filter(([key]) => !(key in patch))))
   }
 
-  const active = accounts.filter((a) => !a.archived)
+  // Archived accounts stay visible only if this entry already uses them (editing old entries).
+  const active = accounts.filter((a) => !a.archived || a.id === initial.accountId || a.id === initial.toAccountId)
   const transfer = form.type === 'transfer'
   const today = todayDhaka()
   const yesterday = addDays(today, -1)
@@ -66,7 +67,7 @@ export function TransactionForm({ accounts, categories, initial, saving, serverE
       {!transfer && (
         <Field label="Category" error={errors.categoryId}>
           <div className="flex flex-wrap gap-2">
-            {categoriesFor(categories, form.type).map((c) => (
+            {categoriesFor(categories, form.type, initial.categoryId).map((c) => (
               <Chip key={c.id} selected={form.categoryId === c.id} onClick={() => set({ categoryId: c.id })}>
                 {c.name}
               </Chip>

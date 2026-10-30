@@ -121,4 +121,13 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-focus;
   }
+  /* Everything clickable shows the hand cursor (Tailwind v4 resets buttons to default). */
+  a[href],
+  button:not(:disabled),
+  select,
+  summary,
+  input[type="date"],
+  [role="button"] {
+    cursor: pointer;
+  }
 }
