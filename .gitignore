@@ -1,7 +1,24 @@
+# deps / build
 node_modules/
 dist/
 .wrangler/
-.dev.vars
-.env*
-.DS_Store
 *.log
+
+# secrets — never commit (use `wrangler secret put` for prod)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+
+# real money data exports
+*.csv
+!**/fixtures/**/*.csv
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

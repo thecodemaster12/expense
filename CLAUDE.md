@@ -49,6 +49,13 @@ Non-goals: SaaS/sign-up, bank or bKash API sync, native app.
 - Style only with the design tokens. No raw hex values in components.
 - Vitest tests are required for the balance formula, the summary math, the transfer rules, and the CSV parser.
 
+## Security
+
+- Never commit secrets. Local secrets go in `.dev.vars` and production secrets in `wrangler secret put`. Both are gitignored or kept off-repo.
+- Never commit real money data. CSV exports are gitignored, and fixtures use fake numbers.
+- The D1 `database_id` in `wrangler.jsonc` is not a secret. Access protects the data.
+- Before every push, check `git diff --cached` for keys or tokens.
+
 ## Commands (fill in once scaffolded)
 
 ```bash
