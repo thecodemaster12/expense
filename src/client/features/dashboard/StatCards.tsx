@@ -22,7 +22,7 @@ export function StatCards({ summary }: { summary: Summary | undefined }) {
   const s = summary
   const dash = <span className="text-muted">—</span>
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3">
       <Stat label="Income" icon={ArrowDownLeft} tone="bg-income-soft text-primary">
         {s ? <Money amount={s.income} /> : dash}
       </Stat>

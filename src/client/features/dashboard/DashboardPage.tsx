@@ -28,38 +28,38 @@ export function DashboardPage() {
         <MonthSwitcher month={month} onChange={setMonth} />
       </div>
 
-      {summary.isError && <p className="text-expense">Couldn't load this month. Check your connection.</p>}
-      <StatCards summary={summary.data} />
+      {/* one sideways-scrolling row at every size, so more accounts never push the page down */}
+      <section className="min-w-0">
+        <div className="mb-2 flex items-baseline justify-between px-1">
+          <h2 className="text-title">Accounts</h2>
+          <Link to="/accounts" className="text-label font-semibold text-primary">
+            See all
+          </Link>
+        </div>
+        <div className="-mx-4 flex snap-x scroll-px-4 gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:scroll-px-0 lg:px-0">
+          {active.map((a) => (
+            <Link key={a.id} to="/accounts" className="w-44 shrink-0 snap-start rounded-card lg:w-[calc((100%-2.25rem)/4)]">
+              <AccountCard account={a} compact className="hover:bg-canvas" />
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      {/* grid-cols-1 = minmax(0,1fr): keeps the scrolling accounts row from widening the column */}
+      {summary.isError && <p className="text-expense">Couldn't load this month. Check your connection.</p>}
+
+      {/* grid-cols-1 = minmax(0,1fr): keeps wide children from widening the column */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        {/* phones: stats first, then the donut; desktop: stats move to the right column */}
+        <div className="lg:order-last">
+          <StatCards summary={summary.data} />
+        </div>
+        <div className="min-w-0 lg:col-span-2">
           {summary.data && categories.data ? (
             <CategoryBreakdown summary={summary.data} categories={categories.data} month={month} />
           ) : (
             <p className="text-muted">Loading…</p>
           )}
         </div>
-
-        {/* desktop: the list fills exactly the donut card's height and scrolls inside, so more accounts never push the chart down */}
-        <section className="relative min-w-0 lg:min-h-64">
-          <div className="flex flex-col lg:absolute lg:inset-0">
-            <div className="mb-2 flex items-baseline justify-between px-1">
-              <h2 className="text-title">Accounts</h2>
-              <Link to="/accounts" className="text-label font-semibold text-primary">
-                See all
-              </Link>
-            </div>
-            {/* phones: a sideways-scrolling row; desktop: a column */}
-            <div className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:min-h-0 lg:flex-1 lg:flex-col lg:gap-2 lg:overflow-x-visible lg:overflow-y-auto lg:px-0">
-              {active.map((a) => (
-                <Link key={a.id} to="/accounts" className="min-w-44 shrink-0 snap-start rounded-card lg:min-w-0">
-                  <AccountCard account={a} compact className="hover:bg-canvas" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
       </div>
 
       {totals.data ? <MonthsChart totals={totals.data} /> : <p className="text-muted">Loading…</p>}
