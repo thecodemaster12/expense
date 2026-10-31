@@ -22,7 +22,7 @@ Screens get data **only** through `src/client/lib/api.ts`, which returns dummy d
 - [x] Accounts screen: total, balances, opening balances, add/edit/archive/restore, colors
 - [x] Profile placeholder: top-right avatar menu with name, email, disabled Sign out
 - [x] Settings screen: category manager (add, rename, delete that moves entries into another existing category), import/export buttons (UI only), app version
-- [ ] Check every screen at 360px and desktop
+- [x] Check every screen at 360px and desktop
 
 ## Phase 2: Backend
 

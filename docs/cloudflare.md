@@ -27,7 +27,7 @@ Everything here uses Cloudflare's free plan. No card or domain is needed. The ap
    ```bash
    npx wrangler d1 create shompod-db
    ```
-   Copy the `database_id` it prints into `wrangler.jsonc` under `d1_databases` (binding `DB`).
+   Copy the `database_id` it prints into `wrangler.jsonc` under `d1_databases` (binding `DB`). Local dev doesn't need it: without an ID, `npm run dev` uses a local copy in `.wrangler/state`.
 4. **Pick your workers.dev subdomain.** In the dashboard, go to Workers & Pages. Cloudflare asks for it on first use.
 
 ## Daily commands
