@@ -13,7 +13,7 @@
 ```ts
 // accounts
 id               integer pk
-name             text unique not null        // "Bank", "Cash", "bKash"
+name             text unique nocase not null // "Bank", "Cash", "bKash"
 opening_balance  integer not null default 0     // can be negative (money owed)
 color            text not null               // palette name, e.g. "slate"
 icon             text not null default 'wallet' // bank | wallet | mobile | card | savings | cash | coins | work | home | safe
@@ -22,7 +22,7 @@ archived         integer not null default 0  // boolean
 
 // categories
 id          integer pk
-name        text unique not null             // "Food"
+name        text unique nocase not null      // "Food"
 kind        text not null                    // "expense" | "income"
 color       text not null                    // palette name, e.g. "amber" (docs/design-system.md)
 sort_order  integer not null default 0
@@ -46,7 +46,7 @@ Later (Phase 4): `created_by text` on transactions, from the Access email.
 
 ## Rules
 
-Enforced in the shared Zod schema and again in the API.
+Enforced in the shared Zod schema and again in the API. The database repeats the simple ones as CHECK rules (amount, type, transfer shape), so a bug can't store a bad row. Names are unique ignoring case.
 
 - `amount > 0`.
 - `expense`: `category_id` is an expense category; `to_account_id` is null.
@@ -90,6 +90,7 @@ byCategory  = spent grouped by category, share = amount / spent
 - Expense categories: Rent, Food, Electricity & Bills, Travel, Shopping, Health, Family, Other.
 - Income categories: Salary, Other Income.
 - Seed colors are listed in `docs/design-system.md`.
+- The seed lives in `migrations/0001_seed.sql`, so it runs once on each database.
 
 ## Must-test logic
 

@@ -69,7 +69,12 @@ npm run cf-typegen   # regenerate worker-configuration.d.ts (also runs on npm in
 npm run deploy       # build + wrangler deploy (Phase 2)
 ```
 
-DB scripts (`db:generate`, `db:migrate:local`, `db:migrate:remote`) are added in Phase 2.
+```bash
+npm run db:generate        # after changing src/worker/db/schema.ts → new SQL in migrations/
+npm run db:migrate:local   # apply migrations to the local DB (.wrangler/state)
+npm run db:migrate:remote  # apply migrations to the real DB
+npm run db:sample:local    # replace local transactions with 6 months of fake ones
+```
 
 ## Definition of done
 

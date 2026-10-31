@@ -30,7 +30,7 @@ Goal: real data, deployed to `shompod.<you>.workers.dev`.
 
 - [ ] Cloudflare account + `wrangler login` + create D1 (`docs/cloudflare.md`)
 - [ ] Hono Worker serving `/api/*` and the built SPA
-- [ ] Drizzle schema, first migration, seed script
+- [x] Drizzle schema, first migration, seed script
 - [ ] Transactions API (CRUD, filters, paging) with Zod validation + tests for transfer rules
 - [ ] Accounts + categories API, balance in SQL + tests for the balance formula
 - [ ] Summary APIs (`/summary`, `/summary/months`) in SQL + tests for summary math

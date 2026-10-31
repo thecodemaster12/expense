@@ -37,10 +37,13 @@ npm run dev                 # app + API on your laptop, local copy of D1
 npm run db:generate         # after changing src/worker/db/schema.ts
 npm run db:migrate:local    # apply migrations to the local DB
 npm run db:migrate:remote   # apply migrations to the real DB
+npm run db:sample:local     # local only: replace transactions with 6 months of fake ones
 npm run deploy              # build and ship
 ```
 
 Order when shipping a schema change: `db:generate` → `db:migrate:remote` → `deploy`.
+
+First time on a new machine: `npm run db:migrate:local` (creates the tables and the seed rows), then optionally `npm run db:sample:local`.
 
 ## Login wall with Access (Phase 3)
 

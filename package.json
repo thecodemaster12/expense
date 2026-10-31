@@ -11,6 +11,10 @@
     "lint": "eslint .",
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+    "db:sample:local": "node scripts/sample-data.ts && wrangler d1 execute DB --local --file .wrangler/sample.sql",
     "postinstall": "wrangler types"
   },
   "dependencies": {
